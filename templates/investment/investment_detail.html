@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ investment.company }}</h1>
+<p>{{ investment.description }}<br> Market: {{investment.market}} <br> Price: $ {{investment.price}} <br> Option: {{investment.option}} <br> Volume: {{investment.volume}} <br>  </p>
+<p>Investment by {{ investment.user.username }} on {{ investment.created_at }}</p>
+{% endblock %}
