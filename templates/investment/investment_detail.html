@@ -7,4 +7,5 @@
 <p><a href="{% url 'investment_update' pk=investment.id %}">Edit Investment</a></p>
 <p><a href="{% url 'investment_delete' pk=investment.id %}">Delete Investment</a></p>
 {% endif %}
+<p><a href="{% url 'answer_create' pk=investment.id %}">Create Analysis</a></p>
 {% endblock %}

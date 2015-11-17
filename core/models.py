@@ -15,6 +15,15 @@ class Investment(models.Model):
 
     def __unicode__(self):
       return self.company
-    
+
     def get_absolute_url(self):
       return reverse("investment_detail", args=[self.id])
+
+class Answer(models.Model):
+  investment = models.ForeignKey(Investment)
+  user = models.ForeignKey(User)
+  create_at = models.DateTimeField(auto_now_add=True)
+  text = models.TextField()
+
+  def __unicode__(self):
+    return self.text

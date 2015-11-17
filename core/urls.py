@@ -8,5 +8,6 @@ urlpatterns = patterns('',
   url(r'^investment/create/$', InvestmentCreateView.as_view(), name='investment_create'),
   url(r'investment/$', InvestmentListView.as_view(), name='investment_list'),
   url(r'^investment/(?P<pk>\d+)/$', InvestmentDetailView.as_view(), name='investment_detail'),
-  url(r'^investment/update/(?P<pk>\d+)/$', InvestmentUpdateView.as_view(), name='investment_update'),                     url(r'^investment/delete/(?P<pk>\d+)/$', InvestmentDeleteView.as_view(), name='investment_delete'),
+  url(r'^investment/update/(?P<pk>\d+)/$', InvestmentUpdateView.as_view(), name='investment_update'),                 url(r'^investment/delete/(?P<pk>\d+)/$', InvestmentDeleteView.as_view(), name='investment_delete'),
+  url(r'^investment/(?P<pk>\d+)/answer/create/$', AnswerCreateView.as_view(), name='answer_create'),                    
 )
