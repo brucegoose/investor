@@ -8,13 +8,17 @@
 <p><a href="{% url 'investment_delete' pk=investment.id %}">Delete Investment</a></p>
 {% endif %}
 {% if analysis.count > 0 %}
-<h3>{{ anlaysis.count }} Analysis {{ analysis.count|pluralize }} </h3>
+<h3>{{ analysis.count }} Analysis {{ analysis.count|pluralize }} </h3>
 {% endif %}
 {% for analysis in analysis %}
 <div class="panel">
   <p>{{ analysis.text }}</p>
+  {% if analysis.user == user %}
+  <p><a href="{% url 'analysis_update' investment_pk=investment.id analysis_pk=analysis.id %}">Edit Analysis</a></p>
+  <p><a href="{% url 'analysis_delete' investment_pk=investment.id analysis_pk=analysis.id %}">Delete Analysis</a></p>
+  {% endif %}
   <p> Analysis by {{ analysis.user.username }} on {{ analysis.create_at }}</p>
 </div>
 {% endfor %}
-<p><a href="{% url 'answer_create' pk=investment.id %}">Create Analysis</a></p>
+<p><a href="{% url 'analysis_create' pk=investment.id %}">Create Analysis</a></p>
 {% endblock %}
