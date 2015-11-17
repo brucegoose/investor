@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-
 from django.core.urlresolvers import reverse_lazy
+from django.core.exceptions import PermissionDenied
 from .models import *
 
 # Create your views here.
@@ -38,10 +38,22 @@ class InvestmentUpdateView(UpdateView):
   template_name = 'investment/investment_form.html'
   fields = ['company', 'market', 'option', 'price', 'volume', 'description']
 
+  def get_object(self, *args, **kwargs):
+    object = super(InvestmentUpdateView, self).get_object(*args, **kwargs)
+    if object.user != self.request.user:
+      raise PermissionDenied()
+    return object
+
 class InvestmentDeleteView(DeleteView):
   model = Investment
   template_name = 'investment/investment_confirm_delete.html'
   success_url = reverse_lazy('investment_list')
+
+  def get_object(self, *args, **kwargs):
+    object = super(InvestmentDeleteView, self).get_object(*args, **kwargs)
+    if object.user != self.request.user:
+      raise PermissionDenied()
+    return object
 
 class AnalysisCreateView(CreateView):
   model = Analysis
@@ -62,6 +74,12 @@ class AnalysisUpdateView(UpdateView):
   template_name = 'analysis/analysis_form.html'
   fields = ['text']
 
+  def get_object(self, *args, **kwargs):
+    object = super(AnalysisUpdateView, self).get_object(*args, **kwargs)
+    if object.user != self.request.user:
+      raise PermissionDenied()
+    return object
+
   def get_success_url(self):
     return self.object.investment.get_absolute_url()
 
@@ -72,3 +90,9 @@ class AnalysisDeleteView(DeleteView):
 
   def get_success_url(self):
     return self.object.investment.get_absolute_url()
+  
+  def get_object(self, *args, **kwargs):
+    object = super(AnalysisDeleteView, self).get_object(*args, **kwargs)
+    if object.user != self.request.user:
+      raise PermissionDenied()
+    return object
