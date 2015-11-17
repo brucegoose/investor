@@ -31,6 +31,8 @@ class InvestmentDetailView(DetailView):
     investment = Investment.objects.get(id=self.kwargs['pk'])
     analysis = Analysis.objects.filter(investment=investment)
     context['analysis'] = analysis
+    user_analysis = Analysis.objects.filter(investment=investment, user=self.request.user)
+    context['user_analysis'] = user_analysis
     return context
 
 class InvestmentUpdateView(UpdateView):
@@ -64,6 +66,9 @@ class AnalysisCreateView(CreateView):
     return self.object.investment.get_absolute_url()
 
   def form_valid(self, form):
+    investment = Investment.objects.get(id=self.kwargs['pk'])
+    if Analysis.objects.filter(investment=investment, user=self.request.user).exists():
+      raise PermissionDenied()
     form.instance.user = self.request.user
     form.instance.investment = Investment.objects.get(id=self.kwargs['pk'])
     return super(AnalysisCreateView, self).form_valid(form)
@@ -90,7 +95,7 @@ class AnalysisDeleteView(DeleteView):
 
   def get_success_url(self):
     return self.object.investment.get_absolute_url()
-  
+
   def get_object(self, *args, **kwargs):
     object = super(AnalysisDeleteView, self).get_object(*args, **kwargs)
     if object.user != self.request.user:

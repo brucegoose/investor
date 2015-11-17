@@ -20,5 +20,7 @@
   <p> Analysis by {{ analysis.user.username }} on {{ analysis.create_at }}</p>
 </div>
 {% endfor %}
+{% if not user_analysis %}
 <p><a href="{% url 'analysis_create' pk=investment.id %}">Create Analysis</a></p>
+{% endif %}
 {% endblock %}
