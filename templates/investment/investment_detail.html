@@ -18,6 +18,14 @@
   <p><a href="{% url 'analysis_delete' investment_pk=investment.id analysis_pk=analysis.id %}">Delete Analysis</a></p>
   {% endif %}
   <p> Analysis by {{ analysis.user.username }} on {{ analysis.create_at }}</p>
+  <p>{{ analysis.vote_set.all.count }} Vote{{ analysis.vote_set.all.count|pluralize }}</p>
+  <form method="post" action="{% url 'vote' %}">
+    {% csrf_token %}
+    <input type="hidden" name="analysis" value="{{ analysis.id }}" />
+    <input type="hidden" name="investment" value="{{ investment.id }}" />
+    <input type="hidden" name="user" value="{{ user.id }}" />
+    <button>+</button>
+</form>
 </div>
 {% endfor %}
 {% if not user_analysis %}

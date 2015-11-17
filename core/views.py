@@ -102,17 +102,27 @@ class AnalysisDeleteView(DeleteView):
     if object.user != self.request.user:
       raise PermissionDenied()
     return object
-  
+
 class VoteFormView(FormView):
   form_class = VoteForm
-  
+
   def form_valid(self, form):
     user = self.request.user
     investment = Investment.objects.get(pk=form.data["investment"])
-    prev_votes = Vote.objects.filter(user=user, investment=investment)
-    has_voted = (prev_votes.count()>0)
-    if not has_voted:
-      Vote.objects.create(user=user, investment=investment)
-    else:
-      prev_votes[0].delete()
-    return redirect ('investment_list')
+    try:
+      analysis = Analysis.objects.get(pk=form.data["analysis"])
+      prev_votes = Vote.objects.filter(user=user, analysis=analysis)
+      has_voted = (prev_votes.count()>0)
+      if not has_voted:
+          Vote.objects.create(user=user, analysis=analysis)
+      else:
+          prev_votes[0].delete()
+      return redirect (reverse('investment_detail', args=[form.data["investment"]]))
+    except:
+      prev_votes = Vote.objects.filter(user=user, investment=investment)
+      has_voted = (prev_votes.count()>0)
+      if not has_voted:
+        Vote.objects.create(user=user, investment=investment)
+      else:
+        prev_votes[0].delete()
+    return redirect('investment_list')

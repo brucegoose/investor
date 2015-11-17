@@ -30,7 +30,8 @@ class Analysis(models.Model):
 
 class Vote(models.Model):
   user = models.ForeignKey(User)
-  investment = models.ForeignKey(Investment)
+  investment = models.ForeignKey(Investment, blank=True, null=True)
+  analysis = models.ForeignKey(Analysis, blank=True, null=True)
   
   def __unicode__(self):
     return "%s upvoted" % (self.suer.username)
