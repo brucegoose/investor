@@ -27,3 +27,10 @@ class Analysis(models.Model):
 
   def __unicode__(self):
     return self.text
+
+class Vote(models.Model):
+  user = models.ForeignKey(User)
+  investment = models.ForeignKey(Investment)
+  
+  def __unicode__(self):
+    return "%s upvoted" % (self.suer.username)

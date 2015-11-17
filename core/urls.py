@@ -13,4 +13,5 @@ urlpatterns = patterns('',
   url(r'^investment/(?P<pk>\d+)/analysis/create/$', login_required(AnalysisCreateView.as_view()), name='analysis_create'),
   url(r'^investment/(?P<investment_pk>\d+)/analysis/update/(?P<analysis_pk>\d+)/$', login_required(AnalysisUpdateView.as_view()), name='analysis_update'),
   url(r'^investment/(?P<investment_pk>\d+)/analysis/delete/(?P<analysis_pk>\d+)/$', login_required(AnalysisDeleteView.as_view()), name='analysis_delete'),
+  url(r'^vote/$', login_required(VoteFormView.as_view()) , name='vote'),
 )

@@ -4,3 +4,4 @@ from .models import *
 # Register your models here.
 admin.site.register(Investment)
 admin.site.register(Analysis)
+admin.site.register(Vote)

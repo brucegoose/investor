@@ -4,6 +4,13 @@
 <div class="panel">
   <h3><a href="{{ investment.get_absolute_url }}">{{ investment.company }}</a></h3>
   <p>Investment by {{ investment.user.username }} on {{ investment.created_at }}</p>
+  <p>{{ investment.vote_set.all.count }} Vote{{ investment.vote_set.all.count|pluralize }}</p>
+  <form method="post" action="{% url 'vote' %}">
+    {% csrf_token %}
+    <input type="hidden" name="investment" value="{{ investment.id }}" />
+    <input type="hidden" name="user" value="{{ user.id }}" />
+    <button>+</button>
+  </form>
 </div>
 {% endfor %}
 {% endblock %}
