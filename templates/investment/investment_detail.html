@@ -5,5 +5,6 @@
 <p>Investment by {{ investment.user.username }} on {{ investment.created_at }}</p>
 {% if investment.user == user %}
 <p><a href="{% url 'investment_update' pk=investment.id %}">Edit Investment</a></p>
+<p><a href="{% url 'investment_delete' pk=investment.id %}">Delete Investment</a></p>
 {% endif %}
 {% endblock %}

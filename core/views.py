@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from django.core.urlresolvers import reverse_lazy
 from .models import *
@@ -30,3 +30,8 @@ class InvestmentUpdateView(UpdateView):
   model = Investment
   template_name = 'investment/investment_form.html'
   fields = ['company', 'market', 'option', 'price', 'volume', 'description']
+  
+class InvestmentDeleteView(DeleteView):
+  model = Investment
+  template_name = 'investment/investment_confirm_delete.html'
+  success_url = reverse_lazy('investment_list')
