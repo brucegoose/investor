@@ -4,6 +4,6 @@
 <p>{{ investment.description }}<br> Market: {{investment.market}} <br> Price: $ {{investment.price}} <br> Option: {{investment.option}} <br> Volume: {{investment.volume}} <br>  </p>
 <p>Investment by {{ investment.user.username }} on {{ investment.created_at }}</p>
 {% if investment.user == user %}
-<p><a href="{% url 'investment_update' pk=investment.id %}">Create Analysis</a></p>
+<p><a href="{% url 'investment_update' pk=investment.id %}">Edit Investment</a></p>
 {% endif %}
 {% endblock %}

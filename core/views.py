@@ -29,4 +29,4 @@ class InvestmentDetailView(DetailView):
 class InvestmentUpdateView(UpdateView):
   model = Investment
   template_name = 'investment/investment_form.html'
-  fields = ['description']
+  fields = ['company', 'market', 'option', 'price', 'volume', 'description']
