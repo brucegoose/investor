@@ -176,3 +176,8 @@ class UserDeleteView(DeleteView):
     user.is_active = False
     user.save()
     return redirect(self.get_success_url())
+  
+class SearchInvestmentListView(InvestmentListView):
+  def get_queryset(self):
+    incoming_query_string = self.request.GET.get('query','')
+    return Investment.objects.filter(company=incoming_query_string)
