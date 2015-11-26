@@ -12,7 +12,7 @@ class Home(TemplateView):
 class InvestmentCreateView(CreateView):
   model = Investment
   template_name = 'investment/investment_form.html'
-  fields = ['company', 'market', 'option', 'price', 'volume', 'description']
+  fields = ['company', 'market', 'option', 'price', 'volume', 'description', 'visibility']
   success_url = reverse_lazy('investment_list')
 
   def form_valid(self, form):
@@ -62,7 +62,7 @@ class InvestmentDeleteView(DeleteView):
 class AnalysisCreateView(CreateView):
   model = Analysis
   template_name = 'analysis/analysis_form.html'
-  fields = ['text']
+  fields = ['text', 'visibility']
 
   def get_success_url(self):
     return self.object.investment.get_absolute_url()
@@ -137,9 +137,9 @@ class UserDetailView(DetailView):
   def get_context_data(self, **kwargs):
     context = super(UserDetailView, self).get_context_data(**kwargs)
     user_in_view = User.objects.get(username=self.kwargs['slug'])
-    investments = Investment.objects.filter(user=user_in_view)
+    investments = Investment.objects.filter(user=user_in_view).exclude(visibility=1)
     context['investments'] = investments
-    analysis = Analysis.objects.filter(user=user_in_view)
+    analysis = Analysis.objects.filter(user=user_in_view).exclude(visibility=1)
     context['analysis'] = analysis
     return context
 

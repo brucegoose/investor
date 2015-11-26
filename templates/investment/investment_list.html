@@ -3,7 +3,7 @@
 {% for investment in object_list %}
 <div class="panel">
   <h3><a href="{{ investment.get_absolute_url }}">{{ investment.company }}</a></h3>
-  <p>Investment by <a href="{% url 'user_detail' slug=investment.user.username %}">{{ investment.user.username }}</a> on {{ investment.created_at }}</p>
+  <p>Investment {% if investment.visibility == 0 %} by <a href="{% url 'user_detail' slug=investment.user.username %}">{{ investment.user.username }}</a> {% endif %} on {{ investment.created_at }}</p>
   <p>{{ investment.vote_set.all.count }} Vote{{ investment.vote_set.all.count|pluralize }}</p>
   <form method="post" action="{% url 'vote' %}">
     {% csrf_token %}
