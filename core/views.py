@@ -23,6 +23,12 @@ class InvestmentListView(ListView):
   model = Investment
   template_name = "investment/investment_list.html"
   paginate_by = 5
+  
+  def get_context_data(self, **kwargs):
+    context = super(InvestmentListView, self).get_context_data(**kwargs)
+    user_votes = Investment.objects.filter(vote__user=self.request.user)
+    context['user_votes'] = user_votes
+    return context 
 
 class InvestmentDetailView(DetailView):
   model = Investment
@@ -35,6 +41,8 @@ class InvestmentDetailView(DetailView):
     context['analysis'] = analysis
     user_analysis = Analysis.objects.filter(investment=investment, user=self.request.user)
     context['user_analysis'] = user_analysis
+    user_votes = Analysis.objects.filter(vote__user=self.request.user)
+    context['user_votes'] = user_votes
     return context
 
 class InvestmentUpdateView(UpdateView):

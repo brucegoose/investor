@@ -4,12 +4,21 @@
 <div class="panel">
   <h3><a href="{{ investment.get_absolute_url }}">{{ investment.company }}</a></h3>
   <p>Investment {% if investment.visibility == 0 %} by <a href="{% url 'user_detail' slug=investment.user.username %}">{{ investment.user.username }}</a> {% endif %} on {{ investment.created_at }}</p>
-  <p>{{ investment.vote_set.all.count }} Vote{{ investment.vote_set.all.count|pluralize }}</p>
   <form method="post" action="{% url 'vote' %}">
+    <span class="badge">{{ investment.analysis_set.all.count }} Analysis{{  investment.analysis_set.all.count|pluralize }}</span>
+    <span class="badge">{{ investment.vote_set.all.count }} Vote{{ investment.vote_set.all.count|pluralize }}</span> 
     {% csrf_token %}
     <input type="hidden" name="investment" value="{{ investment.id }}" />
     <input type="hidden" name="user" value="{{ user.id }}" />
-    <button>+</button>
+    {% if investment in user_votes %}  
+    <button class="btn btn-link">
+      <span class="glyphicon glyphicon-thumbs-down"></span>
+    </button>
+    {% else %}
+    <button class="btn btn-link">
+      <span class="glyphicon glyphicon-thumbs-up"></span>
+    </button>
+    {% endif %}
   </form>
 </div>
 {% empty %}

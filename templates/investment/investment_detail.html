@@ -17,14 +17,23 @@
   <p><a href="{% url 'analysis_update' investment_pk=investment.id analysis_pk=analysis.id %}">Edit Analysis</a></p>
   <p><a href="{% url 'analysis_delete' investment_pk=investment.id analysis_pk=analysis.id %}">Delete Analysis</a></p>
   {% endif %}
-  <p>Analysis {% if analysis.visibility == 0 %} by <a href="{% url 'user_detail' slug=analysis.user.username %}">{{ analysis.user.username }}</a> {% endif %} on {{analysis.created_at }} ({{ analysis.vote_set.all.count }} Vote{{ analysis.vote_set.all.count|pluralize }})</p>
+  <p>Analysis {% if analysis.visibility == 0 %} by <a href="{% url 'user_detail' slug=analysis.user.username %}">{{ analysis.user.username }}</a> {% endif %} on {{ analysis.created_at }}</p>
   <form method="post" action="{% url 'vote' %}">
+    <span class="badge">{{ analysis.vote_set.all.count }} Vote{{  analysis.vote_set.all.count|pluralize }}</span>
     {% csrf_token %}
     <input type="hidden" name="analysis" value="{{ analysis.id }}" />
     <input type="hidden" name="investment" value="{{ investment.id }}" />
     <input type="hidden" name="user" value="{{ user.id }}" />
-    <button>+</button>
-</form>
+    {% if analysis in user_votes %}
+    <button class="btn btn-link">
+      <span class="glyphicon glyphicon-thumbs-down"></span>
+    </button>
+    {% else %}
+    <button class="btn btn-link">
+      <span class="glyphicon glyphicon-thumbs-up"></span>
+    </button>
+    {% endif %}
+  </form>
 </div>
 {% endfor %}
 {% if not user_analysis %}
