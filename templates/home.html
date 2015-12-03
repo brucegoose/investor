@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
 {% if user.is_authenticated %}
 <div class="jumbotron">
-  <h1>Welcome back!<h1>
-</div>
+  <h1><center><img width="100px" height="100px" align=LEFT src="{% static "image/money.png" %}"><p style="font-family:'Merriweather'"><font size="10">Mr. Investor - Where The Best Invest</font><img width="100px" height="100px" align=RIGHT src="{% static "image/money.png" %}"></p></div></center><h1>
 {% else %}
 <div class="jumbotron">
-  <h1>Welcome to Mr.Investor!</h1>
+  <h1><p style="font-family:'Courier New'">Welcome to Mr.Investor!</p>
+        <p><img src="{% static "image/money.png" %}"></p>
   <p><a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}">Sign up</a></p>
 </div>
 {% endif %}
